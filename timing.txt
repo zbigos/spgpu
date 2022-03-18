@@ -1,0 +1,98 @@
+Info: Critical path report for cross-domain path 'posedge clk_25_175' -> '<async>':
+Info: curr total
+Info:  0.5  0.5  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19780_LC.O
+Info:  1.0  1.5    Net core.hscan_pos[0] budget 1.817000 ns (1,5) -> (1,3)
+Info:                Sink $abc$19656$auto$blifparse.cc:492:parse_blif$19891_LC.I0
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:40
+Info:  0.4  1.9  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19891_LC.O
+Info:  0.6  2.5    Net $auto$alumacc.cc:474:replace_alu$3464.C[1] budget 1.687000 ns (1,3) -> (1,2)
+Info:                Sink $nextpnr_ICESTORM_LC_27.I1
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.3  2.8  Source $nextpnr_ICESTORM_LC_27.COUT
+Info:  0.0  2.8    Net $nextpnr_ICESTORM_LC_27$O budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[1].carry$CARRY.CIN
+Info:  0.1  2.9  Source $auto$alumacc.cc:474:replace_alu$3464.slice[1].carry$CARRY.COUT
+Info:  0.0  2.9    Net $auto$alumacc.cc:474:replace_alu$3464.C[2] budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[2].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  3.0  Source $auto$alumacc.cc:474:replace_alu$3464.slice[2].carry$CARRY.COUT
+Info:  0.0  3.0    Net $auto$alumacc.cc:474:replace_alu$3464.C[3] budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[3].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  3.2  Source $auto$alumacc.cc:474:replace_alu$3464.slice[3].carry$CARRY.COUT
+Info:  0.0  3.2    Net $auto$alumacc.cc:474:replace_alu$3464.C[4] budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[4].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  3.3  Source $auto$alumacc.cc:474:replace_alu$3464.slice[4].carry$CARRY.COUT
+Info:  0.0  3.3    Net $auto$alumacc.cc:474:replace_alu$3464.C[5] budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[5].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  3.4  Source $auto$alumacc.cc:474:replace_alu$3464.slice[5].carry$CARRY.COUT
+Info:  0.0  3.4    Net $auto$alumacc.cc:474:replace_alu$3464.C[6] budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[6].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  3.5  Source $auto$alumacc.cc:474:replace_alu$3464.slice[6].carry$CARRY.COUT
+Info:  0.0  3.5    Net $auto$alumacc.cc:474:replace_alu$3464.C[7] budget 0.000000 ns (1,2) -> (1,2)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[7].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  3.7  Source $auto$alumacc.cc:474:replace_alu$3464.slice[7].carry$CARRY.COUT
+Info:  0.2  3.9    Net $auto$alumacc.cc:474:replace_alu$3464.C[8] budget 0.190000 ns (1,2) -> (1,3)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[8].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  4.0  Source $auto$alumacc.cc:474:replace_alu$3464.slice[8].carry$CARRY.COUT
+Info:  0.0  4.0    Net $auto$alumacc.cc:474:replace_alu$3464.C[9] budget 0.000000 ns (1,3) -> (1,3)
+Info:                Sink $auto$alumacc.cc:474:replace_alu$3464.slice[9].carry$CARRY.CIN
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:49
+Info:                  /usr/bin/../share/yosys/ice40/arith_map.v:43
+Info:  0.1  4.1  Source $auto$alumacc.cc:474:replace_alu$3464.slice[9].carry$CARRY.COUT
+Info:  0.3  4.4    Net $abc$19656$auto$alumacc.cc:491:replace_alu$3466[9] budget 0.260000 ns (1,3) -> (1,3)
+Info:                Sink $abc$19656$auto$blifparse.cc:492:parse_blif$19844_LC.I3
+Info:  0.3  4.7  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19844_LC.O
+Info:  0.9  5.6    Net $abc$19656$auto$rtlil.cc:1836:ReduceOr$3472_new_inv_ budget 1.407000 ns (1,3) -> (3,3)
+Info:                Sink $abc$19656$auto$blifparse.cc:492:parse_blif$19947_LC.I1
+Info:  0.4  6.0  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19947_LC.O
+Info:  0.6  6.6    Net $abc$19656$new_n632_ budget 1.253000 ns (3,3) -> (4,3)
+Info:                Sink $abc$19656$auto$blifparse.cc:492:parse_blif$19948_LC.I3
+Info:  0.3  6.9  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19948_LC.O
+Info:  0.6  7.5    Net $abc$19656$new_n633_ budget 1.352000 ns (4,3) -> (4,3)
+Info:                Sink $abc$19656$auto$blifparse.cc:492:parse_blif$19949_LC.I3
+Info:  0.3  7.8  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19949_LC.O
+Info:  1.9  9.7    Net $abc$19656$core.drawing_pixels_new_ budget 1.978000 ns (4,3) -> (16,1)
+Info:                Sink $abc$19656$auto$blifparse.cc:492:parse_blif$19849_LC.I0
+Info:                Defined in:
+Info:                  src/top.v:114
+Info:                  src/vga_core.v:19
+Info:  0.4 10.2  Source $abc$19656$auto$blifparse.cc:492:parse_blif$19849_LC.O
+Info:  2.2 12.3    Net vga_b[0]$SB_IO_OUT budget 1.978000 ns (16,1) -> (33,1)
+Info:                Sink vga_b[0]$sb_io.D_OUT_0
+Info:                Defined in:
+Info:                  src/top.v:14
+Info: 4.2 ns logic, 8.1 ns routing

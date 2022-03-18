@@ -1,0 +1,56 @@
+digraph "sphere_renderer" {
+label="sphere_renderer";
+rankdir="LR";
+remincross=true;
+n4 [ shape=octagon, label="clk", color="black", fontcolor="black" ];
+n5 [ shape=octagon, label="colorv", color="black", fontcolor="black" ];
+n6 [ shape=diamond, label="current_h", color="black", fontcolor="black" ];
+n7 [ shape=diamond, label="current_v", color="black", fontcolor="black" ];
+n8 [ shape=diamond, label="dh", color="black", fontcolor="black" ];
+n9 [ shape=diamond, label="distance", color="black", fontcolor="black" ];
+n10 [ shape=diamond, label="dv", color="black", fontcolor="black" ];
+n11 [ shape=octagon, label="h_readwire", color="black", fontcolor="black" ];
+n12 [ shape=octagon, label="reset", color="black", fontcolor="black" ];
+n13 [ shape=octagon, label="v_readwire", color="black", fontcolor="black" ];
+{ rank="source"; n11; n12; n13; n4;}
+{ rank="sink"; n5;}
+c17 [ shape=record, label="{{<p14> A|<p15> B}|$5\n$add|{<p16> Y}}" ];
+v0 [ label="21'000000000000001000000" ];
+c18 [ shape=record, label="{{<p14> A|<p15> B}|$6\n$lt|{<p16> Y}}" ];
+c19 [ shape=record, label="{{<p14> A|<p15> B}|$3\n$mul|{<p16> Y}}" ];
+c20 [ shape=record, label="{{<p14> A|<p15> B}|$4\n$mul|{<p16> Y}}" ];
+v1 [ label="10'1000000000" ];
+c21 [ shape=record, label="{{<p14> A|<p15> B}|$1\n$sub|{<p16> Y}}" ];
+v2 [ label="10'1000000000" ];
+c22 [ shape=record, label="{{<p14> A|<p15> B}|$2\n$sub|{<p16> Y}}" ];
+v3 [ label="4'0000" ];
+v4 [ label="4'1111" ];
+c24 [ shape=record, label="{{<p14> A|<p15> B|<p23> S}|$7\n$mux|{<p16> Y}}" ];
+v5 [ label="10'1000000000" ];
+x6 [shape=box, style=rounded, label="BUF"];
+v7 [ label="10'1000000000" ];
+x8 [shape=box, style=rounded, label="BUF"];
+c18:p16:e -> c24:p23:w [colorscheme="dark28", color="8", fontcolor="8", label=""];
+c22:p16:e -> n10:w [colorscheme="dark28", color="4", fontcolor="4", style="setlinewidth(3)", label="<21>"];
+n10:e -> c20:p14:w [colorscheme="dark28", color="4", fontcolor="4", style="setlinewidth(3)", label="<21>"];
+n10:e -> c20:p15:w [colorscheme="dark28", color="4", fontcolor="4", style="setlinewidth(3)", label="<21>"];
+n11:e -> c21:p14:w [colorscheme="dark28", color="6", fontcolor="6", style="setlinewidth(3)", label="<10>"];
+n13:e -> c22:p14:w [colorscheme="dark28", color="5", fontcolor="5", style="setlinewidth(3)", label="<10>"];
+c19:p16:e -> c17:p14:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label="<21>"];
+c20:p16:e -> c17:p15:w [colorscheme="dark28", color="8", fontcolor="8", style="setlinewidth(3)", label="<21>"];
+c24:p16:e -> n5:w [colorscheme="dark28", color="3", fontcolor="3", style="setlinewidth(3)", label="<4>"];
+x6:e:e -> n6:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label="<10>"];
+x8:e:e -> n7:w [colorscheme="dark28", color="8", fontcolor="8", style="setlinewidth(3)", label="<10>"];
+c21:p16:e -> n8:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label="<21>"];
+n8:e -> c19:p14:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label="<21>"];
+n8:e -> c19:p15:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label="<21>"];
+c17:p16:e -> n9:w [colorscheme="dark28", color="6", fontcolor="6", style="setlinewidth(3)", label="<21>"];
+n9:e -> c18:p14:w [colorscheme="dark28", color="6", fontcolor="6", style="setlinewidth(3)", label="<21>"];
+v0:e -> c18:p15:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label="<21>"];
+v1:e -> c21:p15:w [colorscheme="dark28", color="6", fontcolor="6", style="setlinewidth(3)", label="<10>"];
+v2:e -> c22:p15:w [colorscheme="dark28", color="8", fontcolor="8", style="setlinewidth(3)", label="<10>"];
+v3:e -> c24:p14:w [colorscheme="dark28", color="5", fontcolor="5", style="setlinewidth(3)", label="<4>"];
+v4:e -> c24:p15:w [colorscheme="dark28", color="3", fontcolor="3", style="setlinewidth(3)", label="<4>"];
+v5:e -> x6:w:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label="<10>"];
+v7:e -> x8:w:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label="<10>"];
+}

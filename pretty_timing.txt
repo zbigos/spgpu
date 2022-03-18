@@ -1,0 +1,196 @@
+#!/usr/bin/perl
+
+# Copyright (c) 2020, Haakan T. Johansson
+
+# This is free and unencumbered software released into the public domain.
+#
+# Anyone is free to copy, modify, publish, use, compile, sell, or
+# distribute this software, either in source code form or as a compiled
+# binary, for any purpose, commercial or non-commercial, and by any
+# means.
+#
+# In jurisdictions that recognize copyright laws, the author or authors
+# of this software dedicate any and all copyright interest in the
+# software to the public domain. We make this dedication for the benefit
+# of the public at large and to the detriment of our heirs and
+# successors. We intend this dedication to be an overt act of
+# relinquishment in perpetuity of all present and future rights to this
+# software under copyright law.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#
+# For more information, please refer to <http://unlicense.org/>
+
+my $expect_sink = 0;
+my $expect_source = 0;
+
+my %info = ();
+
+sub emit();
+
+print sprintf ("%-6s %-6s %-6s %5s  %5s  %s\n",
+	       "coord","block","block","logic","net","signal");
+print sprintf ("%-6s %-6s %-6s %5s  %5s  %s\n",
+	       "------","------","------","-----","-----","------------------------------");
+
+my $t_final_logic = "";
+my $t_final_net   = "";
+my $t_final_total = "";
+
+ parse_line:
+while (my $line = <>)
+{
+    if (!($line =~ s/Info: //)) {
+	next parse_line;
+    }
+    
+    my %newinfo = ();
+
+    if ($line =~ /^Critical path report for clock\s+'(.*)'\s+((.*)\s+->\s+(.*)):$/)
+    {
+	my $clock     = $1;
+	my $edge_from = $2;
+	my $edge_to   = $3;
+    }
+    elsif ($line =~ /^curr total$/)
+    {
+    }
+    elsif ($line =~ /^\s*([\d\.]+)\s+([\d\.]+)\s+Source\s+(.*)$/)
+    {
+	$newinfo{"src_t_logic"}  = $1;
+	$newinfo{"src_t_total"}  = $t_final_total = $2;
+	$newinfo{"src_signal"}   = $3;
+
+	if (defined $info{"setup_t_logic"} ||
+	    defined $info{"src_t_logic"}) { emit (); }
+    }
+    elsif ($line =~ /^\s*([\d\.]+)\s+([\d\.]+)\s+Net\s+(.*)\s+budget\s+([-\d\.]+)\s+ns\s+\(([\d]+),([\d]+)\)\s+->\s+\(([\d]+),([\d]+)\)$/)
+    {
+	$newinfo{"net_t_net"}    = $1;
+	$newinfo{"net_t_total"}  = $t_final_total = $2;
+	$newinfo{"net_signal"}   = $3;
+	$newinfo{"net_t_budget"} = $4;
+	$newinfo{"net_x_from"}   = $5;
+	$newinfo{"net_y_from"}   = $6;
+	$newinfo{"net_x_to"}     = $7;
+	$newinfo{"net_y_to"}     = $8;
+
+	if ($newinfo{"net_signal"} =~ s/\[(\d+)\]$//)
+	{
+	    $newinfo{"net_index"} = $1;
+	}
+
+	$expect_sink = 1;
+
+	if (defined $info{"net_t_net"}) { emit (); }
+    }
+    elsif ($line =~ /^\s*Sink\s+(.*)$/ && $expect_sink)
+    {
+	$newinfo{"sink_signal"}   = $1;
+
+	$expect_sink = 0;
+
+	if (defined $info{"sink_signal"}) { emit (); }
+    }
+    elsif ($line =~ /^\s*([\d\.]+)\s+([\d\.]+)\s+Setup\s+(.*)$/)
+    {
+	$newinfo{"setup_t_logic"}  = $1;
+	$newinfo{"setup_t_total"}  = $t_final_total = $2;
+	$newinfo{"setup_signal"}   = $3;
+
+	if (defined $info{"setup_t_logic"} ||
+	    defined $info{"src_t_logic"}) { emit (); }
+    }
+    elsif ($line =~ /^\s*Defined in:$/)
+    {
+	$expect_source = 1;
+    }
+    elsif ($line =~ /^\s*(.*):([\d]+)\.([\d]+)-([\d]+)\.([\d]+)$/ && $expect_source)
+    {
+	$expect_source = 0;
+    }
+    elsif ($line =~ /^\s*([\d\.]+)\s+ns\s+logic,\s*([\d\.]+)\s+ns\s+routing$/)
+    {
+	$t_final_logic = $1;
+	$t_final_net   = $2;
+    }
+    else
+    {
+	die "Unhandled line: \"$line\"";
+    }
+
+    %info = (%info, %newinfo);
+}
+
+emit(); # any remaining
+
+print sprintf ("%-6s %-6s %-6s %5s  %5s  %s\n",
+	       "------","------","------","-----","-----","------------------------------");
+
+print sprintf ("%-6s %-6s %-6s %5s  %5s  = %s\n",
+	       "","","", $t_final_logic, $t_final_net, $t_final_total);
+
+sub emit()
+{
+    my $t_logic = "";
+    if (defined ($info{"src_t_logic"})) { $t_logic = $info{"src_t_logic"}; }
+    if (defined ($info{"setup_t_logic"})) { $t_logic = $info{"setup_t_logic"}; }
+    my $t_net = "";
+    if (defined ($info{"net_t_net"})) { $t_net = $info{"net_t_net"}; }
+
+    my $signal = "";
+    if (defined ($info{"src_signal"})) { $signal = $info{"src_signal"}; }
+    if (defined ($info{"net_signal"})) { $signal = $info{"net_signal"}; }
+    if (defined ($info{"sink_signal"})) { $signal = $info{"sink_signal"}; }
+    if (defined ($info{"setup_signal"})) { $signal = $info{"setup_signal"}; }
+    # If we have a "net_index", then prefer the net signal name, such that the index is relevant
+    if (defined ($info{"net_signal"})) { $signal = $info{"net_signal"}; }
+
+    # Do some dirty deeds with the signal name to shorten it
+
+    my $block1 = "";
+    my $block2 = "";
+    
+    if ($signal =~ s/_SB_(.*)//)
+    {
+	$block1 = $1;
+
+	if ($block1 =~ s/_SB_(.*)//)
+	{
+	    $block2 = $1;
+	    $block2 =~ s/_.*//;
+	}
+	$block1 =~ s/_.*//;
+    }
+
+    if (defined $info{"net_index"}) {
+	$signal .= sprintf ("[%s]",$info{"net_index"});
+    }
+
+    my $coord = "";
+    if (defined $info{"net_x_from"}) {
+	$coord = sprintf("x%sy%s", $info{"net_x_from"}, $info{"net_y_from"});
+    }
+    elsif (defined $info{"prev_x_from"}) {
+	$coord = sprintf("x%sy%s", $info{"prev_x_from"}, $info{"prev_y_from"});
+    }
+
+    print sprintf ("%-6s %-6s %-6s %5s  %5s  %s\n",
+		   $coord, $block1, $block2, $t_logic, $t_net, $signal);
+
+    my %keep = ();
+    
+    if (defined $info{"net_x_to"})
+    {
+	$keep{"prev_x_from"} = $info{"net_x_to"};
+	$keep{"prev_y_from"} = $info{"net_y_to"};
+    }
+
+    %info = %keep;
+}
